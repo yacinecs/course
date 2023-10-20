@@ -1,5 +1,5 @@
 import 'package:course1/firebase_options.dart';
-import 'package:course1/views/Verify.dart';
+import 'package:course1/views/Verify_email.dart';
 import 'package:course1/views/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
