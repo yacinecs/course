@@ -30,59 +30,48 @@ class _LoginViewState extends State<LoginView> {
   @override
  Widget build(BuildContext context) {
     return Scaffold(
-      appBar: 
-      AppBar(
-        title: const Text('Login'),
+      appBar: AppBar(
+        title: const Text('login'),
       ),
-      body: FutureBuilder(
-            future: Firebase.initializeApp(
-          options: DefaultFirebaseOptions.currentPlatform,
- ),
-        builder: (context,snapshot) {
-          switch (snapshot.connectionState){
-            case ConnectionState.done:
-            return Column(
-        children: [
-        TextField(
-          decoration: const InputDecoration(hintText: 'User'),
-          controller: _email,
-          keyboardType: TextInputType.emailAddress,
+      body: Column(
+          children: [
+          TextField(
+            decoration: const InputDecoration(hintText: 'User'),
+            controller: _email,
+            keyboardType: TextInputType.emailAddress,
+          ),
+          TextField(
+            decoration: const InputDecoration(hintText: 'Pass'),
+            controller: _password,
+            obscureText: true,
+            enableSuggestions: false,
+            autocorrect: false,
+          ),
+          TextButton(
+            onPressed: () async{
+            await Firebase.initializeApp(
+            options: DefaultFirebaseOptions.currentPlatform,
+     );
+            final email=_email.text;
+            final password = _password.text;
+            try{
+            await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
+             
+            }
+            on FirebaseAuthException catch (e){
+                if(e.code == 'user-not-found'){
+                  print('user not found');
+                }
+                else if (e.code == 'wrong-password'){
+                  print('wrong password');
+                }
+            }
+            }, child: const Text('Login')
+          ),
+          TextButton(onPressed: () {
+            Navigator.of(context).pushNamedAndRemoveUntil('/register/', (route) => false);
+          }, child: const Text('Register now'))
+        ],
         ),
-        TextField(
-          decoration: const InputDecoration(hintText: 'Pass'),
-          controller: _password,
-          obscureText: true,
-          enableSuggestions: false,
-          autocorrect: false,
-        ),
-        TextButton(
-          onPressed: () async{
-          await Firebase.initializeApp(
-          options: DefaultFirebaseOptions.currentPlatform,
- );
-          final email=_email.text;
-          final password = _password.text;
-          try{
-          await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
-          
-          }
-          on FirebaseAuthException catch (e){
-              if(e.code == 'user-not-found'){
-                print('user not found');
-              }
-              else if (e.code == 'wrong-password'){
-                print('wrong password');
-              }
-          }
-          }, child: const Text('Login')
-        )
-      ],
-      );
-      default:
-      return const Text('loading');
-      }
-  }
-      ),
     );
-  }
-}
+ }}
