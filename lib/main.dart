@@ -1,6 +1,5 @@
 import 'package:course1/firebase_options.dart';
 import 'package:course1/views/login.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:course1/views/register.dart';
 import 'package:flutter/material.dart';void main() {
