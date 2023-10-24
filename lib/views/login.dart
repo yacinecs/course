@@ -49,14 +49,13 @@ class _LoginViewState extends State<LoginView> {
           ),
           TextButton(
             onPressed: () async{
-            await Firebase.initializeApp(
+            await Firebase.initializeApp(                 // i try to remove it
             options: DefaultFirebaseOptions.currentPlatform,
      );
             final email=_email.text;
             final password = _password.text;
             try{
             await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
-             
             }
             on FirebaseAuthException catch (e){
                 if(e.code == 'user-not-found'){

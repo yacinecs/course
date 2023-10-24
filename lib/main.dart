@@ -4,7 +4,9 @@ import 'package:course1/views/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:course1/views/register.dart';
-import 'package:flutter/material.dart';void main() {
+import 'package:flutter/material.dart';
+import 'package:course1/views/after_login.dart';
+void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
@@ -18,7 +20,8 @@ class MyApp extends StatelessWidget {
       home: const HomePage(),
       routes: {
         '/login/' : (context) => const LoginView(),
-        '/register/': (context) => const RegisterView()
+        '/register/': (context) => const RegisterView(),
+        '/after_login/': (context) => const RegisterView()
       },
     );
   }
@@ -40,16 +43,15 @@ class HomePage extends StatelessWidget {
             final user = FirebaseAuth.instance.currentUser;
             if(user!=null){
               if(user.emailVerified){  //ida kan false wla true (ne7ina no user bach ywli bool)
-                print('Email is verified');
+                return const Afterlogin();
               }
               else{
-                return const VerifyEmailView();
+                return const VerifyEmailView(); // teba3to yverifier
               }
             }
             else{
               return const LoginView();
             }
-            return const Text('done');
           default:
             return const CircularProgressIndicator();
         }
