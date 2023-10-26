@@ -59,3 +59,4 @@ class HomePage extends StatelessWidget {
        );
   }
 }
+enum MenuAction { logout}
